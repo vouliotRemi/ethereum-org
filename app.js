@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
-var approvedBlock = require('./config/config');
 
 // Init the app
 var app = express();
@@ -21,7 +20,7 @@ app.get('/', function(req, res) {
 	res.render('index', { title: 'Ethereum Frontier' });
 });
 
-app.get('/geth', function(req, res) {
+app.get('/cli', function(req, res) {
 	res.render('geth', { title: 'Install Geth' });
 });
 
@@ -65,8 +64,14 @@ app.get('/branding', function(req, res) {
 	res.render('branding', { title: 'Branding Guidelines' });
 });
 
-app.get('/getBlock', function(req, res) {
-	res.json(approvedBlock);
+
+app.get('/powered-by', function(req, res) {
+	res.render('powered-by', { title: 'Powered By' });
+});
+
+
+app.get('/create-meetup', function(req, res) {
+	res.render('create-meetup', { title: 'Create your meetup' });
 });
 
 

@@ -95,10 +95,12 @@ function run_installer()
 	function wait_for_user() {
 		while :
 		do
-			read -p "${blue}==>${reset} $1 (Y/n) " imp
+			read -p "${blue}==>${reset} $1 [Y/n] " imp
 			case $imp in
 				[yY] ) echo; break ;;
-				* ) abortInstall "${red}==>${reset} Process stopped by user. To resume the install run the one-liner command again." ;;
+				'' ) echo; break ;;
+				[nN] ) abortInstall "${red}==>${reset} Process stopped by user. To resume the install run the one-liner command again." ;;
+				* ) echo "Unrecognized option provided. Please provide either 'Y' or 'N'";
 			esac
 		done
 	}
@@ -458,7 +460,7 @@ function run_installer()
 		echo
 		successHeading "Installation successful!"
 		head "Next steps"
-		info "Run ${cyan}\`eth help\`${reset} to get started.${reset}"
+		info "Run ${cyan}\`eth --help\`${reset} to get started.${reset}"
 		echo
 		exit 0
 	}
@@ -491,9 +493,6 @@ function run_installer()
 	echo " ${red}${dim}➜${reset}  You'd be ${b}mad${reset} to use this for anything approaching ${u}${red}${b}"important" or "valuable"${reset}. ${red}Expect dragons;${reset}"
 	echo " ${red}${dim}➜${reset}  If you're in any doubt, stand back and enjoy the show. It's so ${red}unstable${reset}, even Chuck Norris would run away and hide from it;"
 	echo " ${red}${dim}➜${reset}  We fully expect ${red}instability and consensus flaws${reset} in the client, some of which may be exploitable;"
-	echo " ${red}${dim}➜${reset}  As curators, we fully reserve the right to ignore blocks at our discretion;"
-	echo " ${red}${dim}➜${reset}  As curators, from a final block that we solely determine, we will preserve all non-contract (i.e. code-less)"
-	echo "     account balances ${b}${red}above the value of 1 ETH${reset} into the Homestead Genesis block."
 	echo
 
 	# Prompt user to continue or abort
