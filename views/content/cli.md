@@ -19,44 +19,82 @@ If you are building a business that needs to have always on connections to the e
 
 ![Logo for Go](/images/icons/gopher.png)
 
-The **Go** implementation is called **Geth** (the old english third person singular conjugation of “to go”. Quite appropriate given geth is written in Go). Geth has been audited for security and will be the future basis for the end user facing **Mist Browser**, so if you have experience on web development and are interested in building frontend for html dapps, you should experiment with Geth.
+The **Go** implementation is called **Geth**. Geth has been audited for security and will be the future basis for the end user facing **Mist Browser**, so if you have experience on web development and are interested in building frontend for html dapps, you should experiment with Geth.
 
 
-#### Install: Mac and Linux
+#### Install on Mac
 
-In order to 'geth' it, open your command line tool (if you are unsure how to do this, consider waiting for a more user friendly release) paste the above one-liner in your terminal for an automated install script. This script will detect your OS and will attempt to install Geth. 
+Install [Homebrew](http://brew.sh/) and then make sure it's up to date:
 
-    bash <(curl https://install-geth.ethereum.org -L)
+    brew update
+    brew upgrade
 
-Paste the above one-liner in your terminal for an automated install script. This script will detect your OS and will attempt to install the ethereum CLI. 
+Then use these commands to install cpp-ethereum:
+
+    brew tap ethereum/ethereum
+    brew install ethereum
+
+For more see the [full documentation on Mac OSX Geth](https://github.com/ethereum/go-ethereum/wiki/Installation-Instructions-for-Mac)
 
 #### Windows
 
-Download the [latest stable binary](https://build.ethdev.com/builds/Windows%20Go%20master%20branch/Geth-Win64-latest.zip), extract it, and open a command terminal:
+Download the [latest stable binary](https://build.ethdev.com/builds/Windows%20Go%20master%20branch/), extract it, download the zip file, extract geth.exe from zip, open a command terminal and type:
 
     chdir <path to extracted binary>
-    run geth.exe
+    open geth.exe
+
+
+For more see the [full documentation on Windows Geth](https://github.com/ethereum/go-ethereum/wiki/Installation-instructions-for-Windows)
+
+#### Install on Linux
+
+On Ubuntu execute these commands:
+
+    sudo apt-get install software-properties-common
+    sudo add-apt-repository -y ppa:ethereum/ethereum
+    sudo add-apt-repository -y ppa:ethereum/ethereum-dev
+    sudo apt-get update
+    sudo apt-get install ethereum
+
+For other environments and more instruction see the [full documentation on Geth](https://github.com/ethereum/go-ethereum/wiki/Building-Ethereum)
 
 
 ### Eth
 
 ![Logo for C++](/images/icons/cpp.png)
 
-The **C++** implementation is simply called **Eth**. It performs slightly faster and is the basis for the future release of the contract development toolset **Mix IDE**. Eth also comes with some powerful network analysis tools like Alethzero and an in browser solidity compiler. If you are serious about GPU mining and are interested in using ethereum as the backend for projects that involve internet of things, then the C++ "Eth" client, is for you. 
+The **C++** implementation is simply called **Eth**. If you want added security by running two different implementations in parallel or are serious about GPU mining, then the C++ "Eth" client, is for you. 
 
-#### Install: Mac and Linux
+#### Install: on Mac
 
-Paste the one-liner below into your terminal for an automated install script. This script will detect your OS and will attempt to install Eth:
+Install [Homebrew](http://brew.sh/) and then make sure it's up to date:
 
-    bash <(curl https://install-eth.ethereum.org -L)
+    brew update
+    brew upgrade
 
+Then use these commands to install cpp-ethereum:
 
-#### Windows
+    brew tap ethereum/ethereum
+    brew install cpp-ethereum
+    brew linkapps cpp-ethereum
+
+For more see the [full documentation on Mac OSX CPP](https://github.com/ethereum/webthree-umbrella/wiki/Building-on-OS-X)
+
+#### Install on Linux:
+
+If you use Apt-get, then paste this on the terminal:
+
+    apt-get install cpp-ethereum
+
+For more detailed instructions select your environment and read the [build instructions for linux](https://github.com/ethereum/webthree-umbrella/wiki/Building-on-Linux)
+
+#### Install on Windows
 
 Open the [command prompt](http://windows.microsoft.com/en-us/windows-vista/open-a-command-prompt-window) and paste this: 
 
-    bitsadmin /transfer cpp-ethereum "https://build.ethdev.com/builds/Windows%20C%2B%2B%20develop%20branch/Ethereum-win64-latest.exe" %temp%\eth++.exe & %temp%\eth++.exe
+    C:\> git clone --recursive https://github.com/ethereum/webthree-umbrella.git
 
+For more see the [full documentation on Windows OSX CPP](https://github.com/ethereum/webthree-umbrella/wiki/Building-on-Windows)
 
 
 ### Python
@@ -87,7 +125,14 @@ For the purposes of this guide, we will focus on the Console, a JavaScript envir
 
 **Instructions for Eth:** 
 
-    eth -b -i  
+Eth still has a built-in console but it will be removed soon. Just start it using
+
+    eth
+
+and then either use `geth attach` (if you also have geth) or use the following npm console. Eth might take some time to start up.
+
+    npm install -g ethereum-console
+    ethconsole
 
 The first time you start the command line you will be presented with a license. Before you can use them, you **must** accept this license, please read it carefully.
 
@@ -104,7 +149,7 @@ Sometimes you might not want to connect to the live public network; instead you 
 
 **Eth:**
 
-    eth --private 12345 --genesis-json ~/test/genesis.json --db-path ~/.ethereum_experiment -i
+    eth --private 12345 --genesis-json ~/test/genesis.json --db-path ~/.ethereum_experiment
 
 Replace 12345 with any random number you want to use as the network ID. It's a good idea to change the content of the genesis block because if someone accidentally connects to your testnet using the real chain, your local copy will be considered a stale fork and updated to the _"real"_ one. Changing the datadir also changes your local copy of the blockchain, otherwise, in order to successfully mine a block, you would need to mine against the difficulty of the last block present in your local copy of the blockchain - which may take several hours. 
 
@@ -151,18 +196,9 @@ In order to do anything on an Ethereum network you need ether, and to get it, yo
 
 **ATTENTION:** If you were running Ethereum during the olympic phase or earlier in the development, **do not reuse keys** generated before the release of the Frontier client software 1.0, because otherwise they might be vulnerable to [replay attacks](https://en.wikipedia.org/wiki/Replay_attack). Backup those keys, and create new ones using the Frontier release clients.
 
-**GETH**:
-
     personal.newAccount("Write here a good, randomly generated, passphrase!")
 
-**ETH**:
-
-    web3.admin.eth.newAccount({name:"account01",password:"Write here a good, randomly generated, passphrase!", passwordHint:"my hint"})
-
 **Note: Pick up a good passphrase and write it down. If you lose the passphrase you used to encrypt your account, you will not be able to access that account. Repeat: There are no safety nets. It is NOT possible to access your account without a valid passphrase and there is no "forgot my password" option here. See [this XKCD](https://xkcd.com/936/) for details.**
-
-Password hint is optional. You can pick any name you want, it isn't very important.
-
 
 **DO NOT FORGET YOUR PASSPHRASE! **
 
@@ -191,14 +227,16 @@ You now have a variable called primaryAccount that you can use in other calls. T
 
 The command line tools are JavaScript environments, which means you can create functions just like you would in JavaScript. For example, if you want to check the balance of all your accounts at once, use this JavaScript code snippet. 
 
-It will iterate over each of your accounts and print their balance in ether, you can use the following code on **Geth** (this will not work in **Eth**):
+It will iterate over each of your accounts and print their balance in ether, you can use the following code:
  
     function checkAllBalances() { 
-      var i = 0; 
-      web3.eth.accounts.forEach(function(id) {
-        console.log("web3.eth.accounts["+i+"]: " + id + "\tbalance: " + web3.fromWei(web3.eth.getBalance(id), "ether") + " ether"); 
-        i++;
-      })
+      web3.eth.getAccounts(function(err, accounts) {
+       accounts.forEach(function(id) {
+        web3.eth.getBalance(id, function(err, balance) {
+         console.log("" + id + ":\tbalance: " + web3.fromWei(balance, "ether") + " ether"); 
+       });
+      });
+     });
     }; 
 
 Once you executed the line above, all you need to check all of your balances is to call the below function:
