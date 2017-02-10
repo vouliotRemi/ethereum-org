@@ -78,9 +78,9 @@ Now you have the compiler installed, you need now reformat your contract by remo
 You have now compiled your code. Now you need to get it ready for deployment, this includes setting some variables up, like what greeting you want to use. Edit the first line below to something more interesting than "Hello World!" and execute these commands:
 
     var _greeting = "Hello World!"
-    var greeterContract = web3.eth.contract(greeterCompiled.greeter.info.abiDefinition);
+    var greeterContract = web3.eth.contract(greeterCompiled['<stdin>:greeter'].info.abiDefinition);
 
-    var greeter = greeterContract.new(_greeting,{from:web3.eth.accounts[0], data: greeterCompiled.greeter.code, gas: 300000}, function(e, contract){
+    var greeter = greeterContract.new(_greeting,{from:web3.eth.accounts[0], data: greeterCompiled['<stdin>:greeter'].code, gas: 300000}, function(e, contract){
         if(!e) {
 
           if(!contract.address) {
